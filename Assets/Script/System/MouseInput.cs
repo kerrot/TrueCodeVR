@@ -18,18 +18,18 @@ public class MouseInput : InputBase
 
     private void Start()
     {
-        this.UpdateAsObservable().Where(_ => Input.GetMouseButtonDown(0))
+        var mouseSubject = this.UpdateAsObservable().Where(_ => Input.GetMouseButtonDown(0) && Input.mousePosition.x > ca.pixelWidth)
                                  .Throttle(System.TimeSpan.FromSeconds(clickPeriod))
                                  .Where(_ => !Input.GetMouseButton(0))
                                  .Subscribe(_ => inputSubject.OnNext(Unit.Default));
 
-        this.UpdateAsObservable().Where(_ => Input.GetMouseButtonDown(0))
+        this.UpdateAsObservable().Where(_ => Input.GetMouseButtonDown(0) && Input.mousePosition.x > ca.pixelWidth)
                                  .Subscribe(_ => 
                                  {
                                      clickPosition = Input.mousePosition;
                                      clickRotation = ca.transform.rotation;
                                  } );
-        this.UpdateAsObservable().Where(_ => Input.GetMouseButton(0))
+        this.UpdateAsObservable().Where(_ => Input.GetMouseButton(0) && Input.mousePosition.x > ca.pixelWidth)
                                  .Select(_ => (Input.mousePosition - clickPosition) * sensitivity)
                                  .Subscribe(v => 
                                  {
