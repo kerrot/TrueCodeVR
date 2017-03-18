@@ -12,7 +12,9 @@ public class GameSystem : MonoBehaviour
     private InputBase input;
     [SerializeField]
     private GameObject chara;
-
+/// <summary>
+/// ////
+/// </summary>
 
     void Start ()
     {
