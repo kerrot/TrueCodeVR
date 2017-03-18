@@ -6,6 +6,6 @@ public class ActDisapearInGame : ActBase
 {
     public override void Action(ActionParam param)
     {
-        param.self.SetActive(false);
+        param.target.SetActive(false);
     }
 }

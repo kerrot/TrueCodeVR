@@ -8,7 +8,7 @@ public class ActChangeScene : ActBase
         SceneControler s = GameObject.FindObjectOfType<SceneControler>();
         if (s)
         {
-            s.LoadScene(param.str);
+            s.LoadScene(param.param.ToString());
         }
     }
 }

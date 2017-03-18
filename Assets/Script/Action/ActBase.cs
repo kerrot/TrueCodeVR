@@ -5,19 +5,20 @@ using System.Collections;
 
 public abstract class ActBase {
 
-	public enum ActionType
+    public enum ActionType
     {
         ActDestroy,
         ActAnimation,
         ActChangeScene,
     }
 
+    [Serializable]
     public struct ActionParam
     {
-        public GameObject self;
-        public GameObject obj;
-        public float value;
-        public string str;
+        public GameObject target;
+        public string param;
+        public float delay;
+        public ActBase.ActionType type;
     }
 
     public abstract void Action(ActionParam param);

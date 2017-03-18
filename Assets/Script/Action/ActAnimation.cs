@@ -7,9 +7,9 @@ public class ActAnimation : ActBase
 {
     public override void Action(ActionParam param)
     {
-        if (param.obj != null)
+        if (param.target != null)
         {
-            Animation anim = param.obj.GetComponent<Animation>();
+            Animation anim = param.target.GetComponent<Animation>();
             if (anim != null)
             {
                 anim.Play();

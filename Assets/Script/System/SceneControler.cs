@@ -2,7 +2,8 @@
 using UnityEngine.SceneManagement;
 using System.Collections;
 
-public class SceneControler : MonoBehaviour {
+public class SceneControler : MonoBehaviour
+{
     public bool LoadFromAnother { get { return loadFromAnother; } }
 
     AsyncOperation async;
@@ -13,11 +14,6 @@ public class SceneControler : MonoBehaviour {
     void Awake()
     {
         DontDestroyOnLoad(this);
-    }
-
-    void Start()
-    {
-
     }
 
     public void LoadScene(string name)

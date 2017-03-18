@@ -4,15 +4,17 @@ using System.Collections.Generic;
 using System.Collections;
 
 [RequireComponent(typeof(Collider))]
-public class ColliderLeave : ColliderObject
+public class ColliderLeave : InteractableObject
 {
     protected virtual void OnCollisionExit(Collision coll)
     {
-        Action(coll.gameObject);
+        target = coll.gameObject;
+        Act();
     }
 
-    protected virtual void OnTriggerExit(Collider other)
+    protected virtual void OnTriggerExit(Collider coll)
     {
-        Action(other.gameObject);
+        target = coll.gameObject;
+        Act();
     }
 }

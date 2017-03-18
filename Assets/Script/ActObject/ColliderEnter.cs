@@ -4,15 +4,17 @@ using System.Collections.Generic;
 using System.Collections;
 
 [RequireComponent(typeof(Collider))]
-public class ColliderEnter : ColliderObject
+public class ColliderEnter : InteractableObject
 {
     protected virtual void OnCollisionEnter(Collision coll)
     {
-        Action(coll.gameObject);
+        target = coll.gameObject;
+        Act();
     }
 
-    protected virtual void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider coll)
     {
-        Action(other.gameObject);
+        target = coll.gameObject;
+        Act();
     }
 }
