@@ -38,20 +38,32 @@ public class Warpper : MonoBehaviour
         chara.SetActive(canWarp);
         chara.transform.position = RayCastBase.Hit.point;
 
+        render.material.color = (canWarp) ? Color.white : Color.red;
+
         if (canWarp)
         {
             //nav can reach
             NavMeshPath path = new NavMeshPath();
             agent.CalculatePath(RayCastBase.Hit.point, path);
             canWarp &= path.status == NavMeshPathStatus.PathComplete;
+            if (!canWarp)
+            {
+                render.material.color = Color.blue;
+            }
 
             //avatar collision test
             canWarp &= Physics.OverlapCapsule(avatar.transform.position + collShift, avatar.transform.position - collShift, coll.radius).Length == 0;
+            if (!canWarp)
+            {
+                render.material.color = Color.black;
+            }
 
             //hit normal
             canWarp &= Vector3.Angle(Vector3.up, RayCastBase.Hit.normal) < 90;
+            if (!canWarp)
+            {
+                render.material.color = Color.green;
+            }
         }
-
-        render.material.color = (canWarp) ? Color.white : Color.red;
     }
 }

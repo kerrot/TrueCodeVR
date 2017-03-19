@@ -12,9 +12,11 @@ public class GameSystem : MonoBehaviour
     private InputBase input;
     [SerializeField]
     private GameObject chara;
-/// <summary>
-/// ////
-/// </summary>
+
+    private void Awake()
+    {
+        Display.displays.ToObservable().Subscribe(d => d.Activate());
+    }
 
     void Start ()
     {

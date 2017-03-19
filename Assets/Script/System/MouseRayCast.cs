@@ -14,7 +14,7 @@ public class MouseRayCast : RayCastBase
         if (ca)
         {
             tmpPosition = Input.mousePosition;
-            tmpPosition.x -= ca.pixelWidth;
+            //tmpPosition.x -= ca.pixelWidth;
             Debug.Log(Input.mousePosition);
             Ray ray = ca.ScreenPointToRay(tmpPosition);
             Debug.DrawRay(ray.origin, ray.direction);
