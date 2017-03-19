@@ -22,6 +22,11 @@ public class WarpableObject : ActObjectBase
 
     public override void Act()
     {
+
+    }
+
+    public void Warp()
+    {
         if (Warpper.CanWarp)
         {
             tmpLocation = RayCastBase.Hit.point;

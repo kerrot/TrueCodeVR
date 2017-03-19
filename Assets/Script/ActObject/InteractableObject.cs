@@ -12,6 +12,14 @@ public class InteractableObject : ActObjectBase
 
     protected GameObject target;
 
+    cakeslice.Outline outline;
+
+    private void Awake()
+    {
+        outline = gameObject.AddComponent<cakeslice.Outline>();
+        outline.enabled = false;
+    }
+
     public override void Act()
     {
         actions.ForEach(a =>
@@ -30,5 +38,10 @@ public class InteractableObject : ActObjectBase
                 }
             }
         });
+    }
+
+    public override void OnSelected(bool select)
+    {
+        outline.enabled = select;
     }
 }

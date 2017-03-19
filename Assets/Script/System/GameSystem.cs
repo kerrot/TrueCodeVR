@@ -26,6 +26,12 @@ public class GameSystem : MonoBehaviour
         {
             input.OnInput.Where(_ => RayCastBase.CurrentObject)
                          .Subscribe(_ => RayCastBase.CurrentObject.Act()).AddTo(this);
+            input.OnWarp.Where(_ => RayCastBase.CurrentObject && RayCastBase.CurrentObject is WarpableObject)
+                        .Subscribe(_ =>
+                        {
+                            WarpableObject warp = RayCastBase.CurrentObject as WarpableObject;
+                            warp.Warp();
+                        }).AddTo(this);
         }
 	}
 

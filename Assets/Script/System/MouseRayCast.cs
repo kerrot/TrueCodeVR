@@ -20,11 +20,11 @@ public class MouseRayCast : RayCastBase
             //Debug.DrawRay(ray.origin, ray.direction);
             if (Physics.Raycast(ray, out hit))
             {
-                actObject = hit.collider.gameObject.GetComponent<ActObjectBase>();
+                ActObject = hit.collider.gameObject.GetComponent<ActObjectBase>();
                 return;
             }
         }
 
-        actObject = null;
+        ActObject = null;
     }
 }

@@ -33,7 +33,8 @@ public class Warpper : MonoBehaviour
 
     void UniRxUpdate()
     {
-        canWarp = RayCastBase.CurrentObject != null && RayCastBase.CurrentObject is WarpableObject;
+        canWarp =   RayCastBase.CurrentObject != null && 
+                    RayCastBase.CurrentObject is WarpableObject;
 
         chara.SetActive(canWarp);
         chara.transform.position = RayCastBase.Hit.point;

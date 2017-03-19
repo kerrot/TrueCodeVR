@@ -6,4 +6,6 @@ using System;
 public abstract class ActObjectBase : MonoBehaviour
 {
     public abstract void Act();
+
+    public virtual void OnSelected(bool select) { }
 }

@@ -10,6 +10,7 @@ public abstract class ActBase {
         ActDestroy,
         ActAnimation,
         ActChangeScene,
+        ActGrab,
     }
 
     [Serializable]
