@@ -14,7 +14,7 @@ public class WarpableObject : ActObjectBase
         GameSystem system = GameObject.FindObjectOfType<GameSystem>();
         if (system)
         {
-            player = system.GetChara();
+            player = system.Chara;
         }
 
         YOffset = player.transform.position.y;
