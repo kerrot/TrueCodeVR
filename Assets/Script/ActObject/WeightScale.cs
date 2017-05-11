@@ -12,12 +12,8 @@ public class WeightScale : MonoBehaviour {
     [SerializeField]
     private float maxWeight;
 
-
-
     private void Awake()
     {
         
     }
-
-    
 }

@@ -13,7 +13,10 @@ public class ActAnimation : ActBase
             if (anim != null)
             {
                 anim.Play();
+                return;
             }
         }
+
+        Debug.Log("ActAnimation Param Error: " + param);
     }
 }

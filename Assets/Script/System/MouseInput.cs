@@ -6,12 +6,26 @@ using UniRx.Triggers;
 
 public class MouseInput : InputBase
 {
+    public enum InputType
+    {
+        Down,
+        Up,
+        Pressed,
+        Click,
+    }
+
+    [SerializeField]
+    private InputType type;
+    [SerializeField]
+    private int inputKey;
     [SerializeField]
     private float clickPeriod = 0.3f;
     [SerializeField]
     private float sensitivity = 1f;
     [SerializeField]
     private Camera ca;
+    [SerializeField]
+    private int rotateKey;
 
     private Vector3 clickPosition;
     private Quaternion clickRotation;
@@ -19,24 +33,43 @@ public class MouseInput : InputBase
 
     private void Start()
     {
-        this.UpdateAsObservable().Where(_ => Input.GetMouseButtonDown(0))// && Input.mousePosition.x > ca.pixelWidth)
-                                 .Subscribe(_ => 
-                                 {
-                                     inputSubject.OnNext(Unit.Default);
-                                 });
-
-        this.UpdateAsObservable().Where(_ => Input.GetMouseButtonDown(1))// && Input.mousePosition.x > ca.pixelWidth)
+        switch (type)
+        {
+            case InputType.Up:
+                {
+                    this.UpdateAsObservable().Where(_ => Input.GetMouseButtonUp(inputKey))
+                                 .Subscribe(_ => inputSubject.OnNext(Unit.Default));
+                }
+                break;
+            case InputType.Down:
+                {
+                    this.UpdateAsObservable().Where(_ => Input.GetMouseButtonDown(inputKey))
+                                 .Subscribe(_ => inputSubject.OnNext(Unit.Default));
+                }
+                break;
+            case InputType.Pressed:
+                {
+                    this.UpdateAsObservable().Where(_ => Input.GetMouseButton(inputKey))
+                                 .Subscribe(_ => inputSubject.OnNext(Unit.Default));
+                }
+                break;
+            case InputType.Click:
+                {
+                    this.UpdateAsObservable().Where(_ => Input.GetMouseButtonDown(inputKey))
                                  .Throttle(System.TimeSpan.FromSeconds(clickPeriod))
-                                 .Where(_ => !Input.GetMouseButton(1))
-                                 .Subscribe(_ => warpSubject.OnNext(Unit.Default));
+                                 .Where(_ => !Input.GetMouseButton(inputKey))
+                                 .Subscribe(_ => inputSubject.OnNext(Unit.Default));
+                }
+                break;
+        }
 
-        this.UpdateAsObservable().Where(_ => Input.GetMouseButtonDown(1))// && Input.mousePosition.x > ca.pixelWidth)
+        this.UpdateAsObservable().Where(_ => Input.GetMouseButtonDown(rotateKey))// && Input.mousePosition.x > ca.pixelWidth)
                                  .Subscribe(_ => 
                                  {
                                      clickPosition = Input.mousePosition;
                                      clickRotation = ca.transform.rotation;
                                  } );
-        this.UpdateAsObservable().Where(_ => Input.GetMouseButton(1))// && Input.mousePosition.x > ca.pixelWidth)
+        this.UpdateAsObservable().Where(_ => Input.GetMouseButton(rotateKey))// && Input.mousePosition.x > ca.pixelWidth)
                                  .Select(_ => (Input.mousePosition - clickPosition) * sensitivity)
                                  .Subscribe(v => 
                                  {

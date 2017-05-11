@@ -11,11 +11,14 @@ public abstract class ActBase {
         ActAnimation,
         ActChangeScene,
         ActGrab,
+        ActOutline,
     }
 
     [Serializable]
     public struct ActionParam
     {
+        [NonSerialized]
+        public GameObject self;
         public GameObject target;
         public string param;
         public float delay;

@@ -5,22 +5,9 @@ using System;
 using UniRx;
 using UniRx.Triggers;
 
-public class InteractableObject : ActObjectBase
+public class InteractableObject : MonoBehaviour
 {
-    [SerializeField]
-    protected List<ActBase.ActionParam> actions = new List<ActBase.ActionParam>();
-
-    protected GameObject target;
-
-    cakeslice.Outline outline;
-
-    private void Awake()
-    {
-        outline = gameObject.AddComponent<cakeslice.Outline>();
-        outline.enabled = false;
-    }
-
-    public override void Act()
+    public virtual void Act(List<ActBase.ActionParam> actions, GameObject target)
     {
         actions.ForEach(a =>
         {
@@ -28,6 +15,7 @@ public class InteractableObject : ActObjectBase
             if (act != null)
             {
                 a.target = (a.target) ? a.target : target;
+                a.self = gameObject;
                 if (a.delay > 0)
                 {
                     Observable.Timer(TimeSpan.FromSeconds(a.delay)).Subscribe(_ => act.Action(a)).AddTo(this);
@@ -38,10 +26,5 @@ public class InteractableObject : ActObjectBase
                 }
             }
         });
-    }
-
-    public override void OnSelected(bool select)
-    {
-        outline.enabled = select;
     }
 }

@@ -11,20 +11,26 @@ public class MouseRayCast : RayCastBase
 
     public override void Cast()
     {
+        GameObject tmp = obj;
+        obj = null;
+
         if (ca)
         {
             tmpPosition = Input.mousePosition;
-            //tmpPosition.x -= ca.pixelWidth;
-            //Debug.Log(Input.mousePosition);
+
             Ray ray = ca.ScreenPointToRay(tmpPosition);
-            //Debug.DrawRay(ray.origin, ray.direction);
             if (Physics.Raycast(ray, out hit))
             {
-                ActObject = hit.collider.gameObject.GetComponent<ActObjectBase>();
-                return;
+                obj = hit.collider.gameObject;
+                if (tmp == null)
+                {
+                    CastIn();
+                }
+            }
+            else if (tmp != null)
+            {
+                CastOut(tmp);
             }
         }
-
-        ActObject = null;
     }
 }

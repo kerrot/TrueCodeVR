@@ -23,9 +23,6 @@ public class VRInput : InputBase
 			{
 				this.UpdateAsObservable().Where(_ => device.GetPressDown(SteamVR_Controller.ButtonMask.Trigger))
 										 .Subscribe(_ => inputSubject.OnNext(Unit.Default));
-
-				this.UpdateAsObservable().Where(_ => device.GetPressUp(SteamVR_Controller.ButtonMask.Touchpad))
-										 .Subscribe(_ => warpSubject.OnNext(Unit.Default));
 			}
 		}
     }

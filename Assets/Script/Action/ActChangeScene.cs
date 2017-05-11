@@ -10,5 +10,7 @@ public class ActChangeScene : ActBase
         {
             s.LoadScene(param.param.ToString());
         }
+
+        Debug.Log("ActChangeScene Param Error: " + param);
     }
 }

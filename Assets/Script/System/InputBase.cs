@@ -7,7 +7,5 @@ using UniRx.Triggers;
 public class InputBase : MonoBehaviour
 {
     protected Subject<Unit> inputSubject = new Subject<Unit>();
-    protected Subject<Unit> warpSubject = new Subject<Unit>();
     public IObservable<Unit> OnInput { get { return inputSubject; } }
-    public IObservable<Unit> OnWarp { get { return warpSubject; } }
 }

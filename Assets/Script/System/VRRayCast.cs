@@ -15,7 +15,6 @@ public class VRRayCast : RayCastBase {
     [SerializeField]
     private GameObject rayObject;
 
-	RaycastHit hit;
 	LineDrawControl lines;
 	SteamVR_Controller.Device device;
 
@@ -24,21 +23,21 @@ public class VRRayCast : RayCastBase {
 	public override void Cast()
     {
 		lines.gameObject.SetActive(false);
-		ActObject = null;
+		//ActObject = null;
 
-		if (device != null)
-		{
-			if (device.GetPress(SteamVR_Controller.ButtonMask.Touchpad))
-			{
-				lines.gameObject.SetActive(true);
-				if (Raycast())
-				{
-					ActObject = hit.collider.gameObject.GetComponent<ActObjectBase>();
-					return;
-				}
-			}
+		//if (device != null)
+		//{
+		//	if (device.GetPress(SteamVR_Controller.ButtonMask.Touchpad))
+		//	{
+		//		lines.gameObject.SetActive(true);
+		//		if (Raycast())
+		//		{
+		//			ActObject = hit.collider.gameObject.GetComponent<ActObjectBase>();
+		//			return;
+		//		}
+		//	}
 
-		}
+		//}
     }
 
 	void Start()

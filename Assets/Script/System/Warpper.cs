@@ -14,10 +14,6 @@ public class Warpper : MonoBehaviour
     [SerializeField]
     private NavMeshAgent agent;
 
-    private static bool canWarp;
-    public static bool CanWarp { get { return canWarp; } }
-
-
     private CapsuleCollider coll;
     private MeshRenderer render;
     private Vector3 collShift;
@@ -27,17 +23,14 @@ public class Warpper : MonoBehaviour
         coll = avatar.GetComponent<CapsuleCollider>();
         render = avatar.GetComponentInChildren<MeshRenderer>();
         collShift = new Vector3(0, coll.height / 2 - coll.radius, 0);
-
-        this.UpdateAsObservable().Subscribe(_ => UniRxUpdate());
 	}
 
-    void UniRxUpdate()
+    bool CanWarp(RaycastHit Hit)
     {
-        canWarp =   RayCastBase.CurrentObject != null && 
-                    RayCastBase.CurrentObject is WarpableObject;
+        bool canWarp = Hit.collider.gameObject != null;
 
         chara.SetActive(canWarp);
-        chara.transform.position = RayCastBase.Hit.point;
+        chara.transform.position = Hit.point;
 
         render.material.color = (canWarp) ? Color.white : Color.red;
 
@@ -45,7 +38,7 @@ public class Warpper : MonoBehaviour
         {
             //nav can reach
             NavMeshPath path = new NavMeshPath();
-            agent.CalculatePath(RayCastBase.Hit.point, path);
+            agent.CalculatePath(Hit.point, path);
             canWarp &= path.status == NavMeshPathStatus.PathComplete;
             if (!canWarp)
             {
@@ -60,11 +53,13 @@ public class Warpper : MonoBehaviour
             }
 
             //hit normal
-            canWarp &= Vector3.Angle(Vector3.up, RayCastBase.Hit.normal) < 90;
+            canWarp &= Vector3.Angle(Vector3.up, Hit.normal) < 90;
             if (!canWarp)
             {
                 render.material.color = Color.green;
             }
         }
+
+        return canWarp;
     }
 }
