@@ -9,7 +9,7 @@ public class MouseRayCast : RayCastBase
 
     private Vector3 tmpPosition;
 
-    public override void Cast()
+	protected override void Cast()
     {
         GameObject tmp = obj;
         obj = null;

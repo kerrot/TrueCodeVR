@@ -6,16 +6,6 @@ using UniRx.Triggers;
 
 public class MouseInput : InputBase
 {
-    public enum InputType
-    {
-        Down,
-        Up,
-        Pressed,
-        Click,
-    }
-
-    [SerializeField]
-    private InputType type;
     [SerializeField]
     private int inputKey;
     [SerializeField]

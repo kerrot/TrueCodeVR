@@ -14,7 +14,28 @@ public abstract class RayCastBase : TriggerObject
     protected RaycastHit hit;
     public RaycastHit Hit { get { return hit; } }
 
-    public abstract void Cast();
+	protected abstract void Cast();
+
+	public void RayCast ()
+	{
+		GameObject tmp = obj;
+		obj = null;
+
+		Cast ();
+
+		if (tmp != obj)
+		{
+			if (tmp != null) 
+			{
+				CastOut (tmp);
+			}
+
+			if (obj != null) 
+			{
+				CastIn ();
+			}
+		}
+	}
 
     protected void CastIn()
     {

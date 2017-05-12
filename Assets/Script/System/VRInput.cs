@@ -8,9 +8,13 @@ public class VRInput : InputBase
 {
     [SerializeField]
     private GameObject rayObject;
+	[SerializeField]
+	private LineDrawControl lines;
+	[SerializeField]
+	private SteamVR_Controller.ButtonMask inputKey;
+	[SerializeField]
+	private SteamVR_Controller.ButtonMask teleportKey;
 
-	RaycastHit hit;
-	LineDrawControl lines;
 	SteamVR_Controller.Device device;
 
     private void Start()
@@ -21,8 +25,8 @@ public class VRInput : InputBase
 			device = SteamVR_Controller.Input((int) trackedObject.index);
 			if (device != null)
 			{
-				this.UpdateAsObservable().Where(_ => device.GetPressDown(SteamVR_Controller.ButtonMask.Trigger))
-										 .Subscribe(_ => inputSubject.OnNext(Unit.Default));
+				//this.UpdateAsObservable().Where(_ => device.GetPressDown(inputKey))
+				//						 .Subscribe(_ => inputSubject.OnNext(Unit.Default));
 			}
 		}
     }
