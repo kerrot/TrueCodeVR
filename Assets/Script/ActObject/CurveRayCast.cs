@@ -15,24 +15,18 @@ public class CurveRayCast : RayCastBase {
 	[SerializeField]
 	private LineDrawControl lines;
 
-	int counter;
+    List<Vector3> results = new List<Vector3>();
 
-	void Start()
+    protected override void Cast()
 	{
-		
-	}
-
-	protected override void Cast()
-	{
-		List<Vector3> results = new List<Vector3>();
-
-		counter = 0;
+        results.Clear();
 
 		if (divLength > 0)
 		{
+            int counter = 0;
+
 			Vector3 pos = rayObject.transform.position;
 			Vector3 dir = rayObject.transform.forward;
-
 
 			Vector3 check = pos + dir;
 			check.y = pos.y;

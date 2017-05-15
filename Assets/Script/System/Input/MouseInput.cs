@@ -7,9 +7,9 @@ using UniRx.Triggers;
 public class MouseInput : InputBase
 {
     [SerializeField]
-    private int inputKey;
+    private RayCastBase ray;
     [SerializeField]
-    private float clickPeriod = 0.3f;
+    private int inputKey;
     [SerializeField]
     private float sensitivity = 1f;
     [SerializeField]
@@ -23,34 +23,15 @@ public class MouseInput : InputBase
 
     private void Start()
     {
-        switch (type)
+        BaseInput();
+
+        Warpper warp = GameObject.FindObjectOfType<Warpper>();
+        if (ray && warp)
         {
-            case InputType.Up:
-                {
-                    this.UpdateAsObservable().Where(_ => Input.GetMouseButtonUp(inputKey))
-                                 .Subscribe(_ => inputSubject.OnNext(Unit.Default));
-                }
-                break;
-            case InputType.Down:
-                {
-                    this.UpdateAsObservable().Where(_ => Input.GetMouseButtonDown(inputKey))
-                                 .Subscribe(_ => inputSubject.OnNext(Unit.Default));
-                }
-                break;
-            case InputType.Pressed:
-                {
-                    this.UpdateAsObservable().Where(_ => Input.GetMouseButton(inputKey))
-                                 .Subscribe(_ => inputSubject.OnNext(Unit.Default));
-                }
-                break;
-            case InputType.Click:
-                {
-                    this.UpdateAsObservable().Where(_ => Input.GetMouseButtonDown(inputKey))
-                                 .Throttle(System.TimeSpan.FromSeconds(clickPeriod))
-                                 .Where(_ => !Input.GetMouseButton(inputKey))
-                                 .Subscribe(_ => inputSubject.OnNext(Unit.Default));
-                }
-                break;
+            this.UpdateAsObservable().Subscribe(_ => {
+                                        ray.RayCast();
+                                        warp.WarpTest(ray.Hit);
+                                    });
         }
 
         this.UpdateAsObservable().Where(_ => Input.GetMouseButtonDown(rotateKey))// && Input.mousePosition.x > ca.pixelWidth)
@@ -58,7 +39,7 @@ public class MouseInput : InputBase
                                  {
                                      clickPosition = Input.mousePosition;
                                      clickRotation = ca.transform.rotation;
-                                 } );
+                                 });
         this.UpdateAsObservable().Where(_ => Input.GetMouseButton(rotateKey))// && Input.mousePosition.x > ca.pixelWidth)
                                  .Select(_ => (Input.mousePosition - clickPosition) * sensitivity)
                                  .Subscribe(v => 
@@ -73,4 +54,8 @@ public class MouseInput : InputBase
                                      ca.transform.rotation = Quaternion.Euler(tmpRotation);
                                  });
     }
+
+    protected override bool GetKeyDown() { return Input.GetMouseButtonDown(inputKey); }
+    protected override bool GetKeyUp() { return Input.GetMouseButtonUp(inputKey); }
+    protected override bool GetKeyPressed() { return Input.GetMouseButton(inputKey); }
 }

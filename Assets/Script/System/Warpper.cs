@@ -13,6 +13,13 @@ public class Warpper : MonoBehaviour
     private GameObject avatar;
     [SerializeField]
     private NavMeshAgent agent;
+    [SerializeField]
+    private GameObject player;
+    [SerializeField]
+    private Vector3 Offset;
+
+    private bool canWarp = false;
+    public bool CanWarp { get { return CanWarp; } }
 
     private CapsuleCollider coll;
     private MeshRenderer render;
@@ -25,9 +32,9 @@ public class Warpper : MonoBehaviour
         collShift = new Vector3(0, coll.height / 2 - coll.radius, 0);
 	}
 
-    bool CanWarp(RaycastHit Hit)
+    public bool WarpTest(RaycastHit Hit)
     {
-        bool canWarp = Hit.collider.gameObject != null;
+        canWarp = Hit.collider.gameObject != null;
 
         chara.SetActive(canWarp);
         chara.transform.position = Hit.point;
@@ -61,5 +68,13 @@ public class Warpper : MonoBehaviour
         }
 
         return canWarp;
+    }
+
+    public void Warp()
+    {
+        if (CanWarp)
+        {
+            player.transform.position = chara.transform.position + Offset;
+        }
     }
 }

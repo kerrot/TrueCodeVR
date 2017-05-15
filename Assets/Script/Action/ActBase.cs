@@ -7,11 +7,12 @@ public abstract class ActBase {
 
     public enum ActionType
     {
-        ActDestroy,
         ActAnimation,
         ActChangeScene,
+        ActDestroy,
         ActGrab,
-        ActOutline,
+        ActVisible,
+        ActWarp,
     }
 
     [Serializable]

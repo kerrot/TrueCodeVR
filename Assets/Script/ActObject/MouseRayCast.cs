@@ -1,24 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
+using UniRx.Triggers;
 
 public class MouseRayCast : RayCastBase
 {
     [SerializeField]
     private Camera ca;
 
-    private Vector3 tmpPosition;
-
-	protected override void Cast()
+    protected override void Cast()
     {
         GameObject tmp = obj;
         obj = null;
 
         if (ca)
         {
-            tmpPosition = Input.mousePosition;
-
-            Ray ray = ca.ScreenPointToRay(tmpPosition);
+            Ray ray = ca.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))
             {
                 obj = hit.collider.gameObject;
