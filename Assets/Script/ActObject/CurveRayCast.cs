@@ -41,14 +41,16 @@ public class CurveRayCast : RayCastBase {
 				Vector3 tmpPos = pos + dir * divLength;
 				results.Add(tmpPos);
 
-				if (Physics.Raycast(pos, dir, out hit, divLength))
-				{
-					lines.points = results.ToArray();
+                if (Physics.Raycast(pos, dir, out hit, divLength))
+                {
+                    obj = hit.collider.gameObject;
 
-					obj = hit.collider.gameObject;
-
-					return;
-				}
+                    break;
+                }
+                else if (divAngle <= 0)
+                {
+                    break;
+                }
 
 				pos = tmpPos;
 				dir = Quaternion.AngleAxis(divAngle, rayObject.transform.right) * dir;
@@ -56,6 +58,9 @@ public class CurveRayCast : RayCastBase {
 			}
 		}
 
-		lines.points = results.ToArray();
+        if (lines)
+        {
+            lines.points = results.ToArray();
+        }
 	}
 }

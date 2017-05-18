@@ -8,12 +8,6 @@ public class GameSystem : MonoBehaviour
 {
     [SerializeField]
     private RayCastBase rayCast;
-    [SerializeField]
-    private InputBase input;
-    [SerializeField]
-    private GameObject chara;
-
-	public GameObject Chara { get { return chara; } }
 
     private void Awake()
     {
@@ -22,27 +16,9 @@ public class GameSystem : MonoBehaviour
 
     void Start ()
     {
-        //this.UpdateAsObservable().Subscribe(_ => UniRxUpdate());
-
-        //if (input)
-        //{
-        //    input.OnInput.Where(_ => RayCastBase.CurrentObject)
-        //                 .Subscribe(_ => RayCastBase.CurrentObject.Act()).AddTo(this);
-
-        //    input.OnWarp.Where(_ => RayCastBase.CurrentObject && RayCastBase.CurrentObject is WarpableObject)
-        //                .Subscribe(_ =>
-        //                {
-        //                    WarpableObject warp = RayCastBase.CurrentObject as WarpableObject;
-        //                    warp.Warp();
-        //                }).AddTo(this);
-        //}
+        if (rayCast)
+        {
+            this.UpdateAsObservable().Subscribe(_ => rayCast.RayCast());
+        }
 	}
-
-    //void UniRxUpdate()
-    //{
-    //    if (rayCast)
-    //    {
-    //        rayCast.Cast();
-    //    }
-    //}
 }

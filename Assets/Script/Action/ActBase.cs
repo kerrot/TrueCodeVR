@@ -13,6 +13,7 @@ public abstract class ActBase {
         ActGrab,
         ActVisible,
         ActWarp,
+        ActOutline,
     }
 
     [Serializable]
