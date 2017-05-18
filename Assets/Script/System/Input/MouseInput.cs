@@ -13,7 +13,7 @@ public class MouseInput : InputBase
     [SerializeField]
     private float sensitivity = 1f;
     [SerializeField]
-    private Camera ca;
+    private GameObject view;
     [SerializeField]
     private int rotateKey;
 
@@ -38,7 +38,7 @@ public class MouseInput : InputBase
                                  .Subscribe(_ => 
                                  {
                                      clickPosition = Input.mousePosition;
-                                     clickRotation = ca.transform.rotation;
+                                     clickRotation = view.transform.rotation;
                                  });
         this.UpdateAsObservable().Where(_ => Input.GetMouseButton(rotateKey))// && Input.mousePosition.x > ca.pixelWidth)
                                  .Select(_ => (Input.mousePosition - clickPosition) * sensitivity)
@@ -51,7 +51,7 @@ public class MouseInput : InputBase
                                      if (tmpRotation.x > 90) tmpRotation.x = 90;
                                      if (tmpRotation.x < -90) tmpRotation.x = -90;
 
-                                     ca.transform.rotation = Quaternion.Euler(tmpRotation);
+                                     view.transform.rotation = Quaternion.Euler(tmpRotation);
                                  });
     }
 

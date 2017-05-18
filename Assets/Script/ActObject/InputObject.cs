@@ -5,7 +5,8 @@ using UniRx;
 
 public class InputObject : InteractableObject
 {
-    List<ActBase.ActionParam> actions = new List<ActBase.ActionParam>();
+    [SerializeField]
+    private List<ActBase.ActionParam> actions = new List<ActBase.ActionParam>();
 
     [SerializeField]
     private InputBase input;

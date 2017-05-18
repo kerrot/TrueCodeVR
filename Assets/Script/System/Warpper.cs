@@ -19,7 +19,7 @@ public class Warpper : MonoBehaviour
     private Vector3 Offset;
 
     private bool canWarp = false;
-    public bool CanWarp { get { return CanWarp; } }
+    public bool CanWarp { get { return canWarp; } }
 
     private CapsuleCollider coll;
     private MeshRenderer render;
@@ -34,7 +34,7 @@ public class Warpper : MonoBehaviour
 
     public bool WarpTest(RaycastHit Hit)
     {
-        canWarp = Hit.collider.gameObject != null;
+        canWarp = Hit.collider != null;
 
         chara.SetActive(canWarp);
         chara.transform.position = Hit.point;
