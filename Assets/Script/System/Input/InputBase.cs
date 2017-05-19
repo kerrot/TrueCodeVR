@@ -21,6 +21,8 @@ public abstract class InputBase : MonoBehaviour
 
     protected Subject<Unit> inputSubject = new Subject<Unit>();
     public IObservable<Unit> OnInput { get { return inputSubject; } }
+	protected Subject<Unit> inputOffSubject = new Subject<Unit>();
+	public IObservable<Unit> OnInputOff { get { return inputOffSubject; } }
 
     protected abstract bool GetKeyDown();
     protected abstract bool GetKeyUp();
@@ -45,7 +47,10 @@ public abstract class InputBase : MonoBehaviour
             case InputType.Pressed:
                 {
                     this.UpdateAsObservable().Where(_ => GetKeyPressed())
-                                 .Subscribe(_ => inputSubject.OnNext(Unit.Default));
+											.Subscribe(_ => inputSubject.OnNext(Unit.Default));
+
+					this.UpdateAsObservable().Where(_ => GetKeyUp())
+											.Subscribe(_ => inputOffSubject.OnNext(Unit.Default));
                 }
                 break;
             case InputType.Click:
