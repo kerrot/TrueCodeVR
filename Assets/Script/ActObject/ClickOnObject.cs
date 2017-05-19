@@ -19,8 +19,8 @@ public class ClickOnObject : InteractableObject
     {
         if (input)
         {
-            input.OnInput.Where(_ => trigger && trigger.CurrentObj)
-                         .Subscribe(_ => Act(actions, target == null ? trigger.CurrentObj : target));
+            input.OnInput.Where(_ => trigger && trigger.CurrentObj == gameObject)
+                         .Subscribe(_ => Act(actions, target == null ? trigger.gameObject : target));
         }
     }
 }

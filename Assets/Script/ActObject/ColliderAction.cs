@@ -22,7 +22,7 @@ public class ColliderAction : TriggerObject
     protected virtual void OnTriggerEnter(Collider coll)
     {
         obj = coll.gameObject;
-
+		Debug.Log("enter " + obj);
         Act(enterActs, target == null ? coll.gameObject : target);
     }
 

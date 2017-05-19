@@ -5,10 +5,10 @@ public class ActGrab : ActBase
 {
     public override void Action(ActionParam param)
     {
-        Graber g = param.self.GetComponent<Graber>();
+        Graber g = param.target.GetComponent<Graber>();
         if (g)
         {
-            g.Grab(param.target);
+            g.Grab(param.self);
             return;
         }
 

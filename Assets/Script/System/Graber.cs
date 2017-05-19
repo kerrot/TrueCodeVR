@@ -29,7 +29,7 @@ public class Graber : MonoBehaviour {
 		{
 			return;
 		}
-
+		
         if (obj != null)
         {
             Release();
@@ -38,6 +38,7 @@ public class Graber : MonoBehaviour {
         obj = o;
 		if (obj) 
 		{
+			Debug.Log("Grab " + o);
 			obj.transform.parent = transform;
 
 			Rigidbody rd = obj.GetComponent<Rigidbody> ();
@@ -55,13 +56,13 @@ public class Graber : MonoBehaviour {
     public void Release()
     {
 		if (obj) 
-		{
+		{Debug.Log("Release" + obj);
 			obj.transform.parent = null;
 			Rigidbody rd = obj.GetComponent<Rigidbody> ();
 			if (rd) 
 			{
 				rd.useGravity = true;
-				rd.velocity = (obj.transform.position - lastPosiiton) * strength;
+				rd.AddForce((obj.transform.position - lastPosiiton) * strength);
 			}
 
 			recordSubject.Dispose ();

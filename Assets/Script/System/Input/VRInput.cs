@@ -29,6 +29,8 @@ public class VRInput : InputBase
     [SerializeField]
 	private LineDrawControl lines;
 	[SerializeField]
+	private GameObject chara;
+	[SerializeField]
 	private VRKey inputKey;
 	[SerializeField]
 	private VRKey teleportKey;
@@ -53,12 +55,16 @@ public class VRInput : InputBase
                     this.UpdateAsObservable().Where(_ => device.GetPress(GetButton(teleportKey)))
                                  .Subscribe(_ => {
                                      lines.gameObject.SetActive(true);
+									 chara.SetActive(true);
                                      ray.RayCast();
                                      warp.WarpTest(ray.Hit);
                                  });
 
                     this.UpdateAsObservable().Where(_ => device.GetPressUp(GetButton(teleportKey)))
-                                 .Subscribe(_ => lines.gameObject.SetActive(false));
+                                 .Subscribe(_ => { 
+										lines.gameObject.SetActive(false);
+										chara.SetActive(false);		
+								});
                 }
             }
 		}
