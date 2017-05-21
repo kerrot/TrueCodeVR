@@ -25,21 +25,34 @@ public class Graber : MonoBehaviour {
 
     public void Grab(GameObject o)
     {
-		if (o == obj) 
+		if (o == null || o == obj) 
 		{
 			return;
 		}
-		
+
+        InteractableObject inter = o.GetComponent<InteractableObject>();
+        if (inter == null || inter.Owner != null)
+        {
+            return;
+        }
+
         if (obj != null)
         {
-            Release();
+            return;
         }
 
         obj = o;
 		if (obj) 
 		{
-			Debug.Log("Grab " + o);
 			obj.transform.parent = transform;
+
+            obj.GetComponent<InteractableObject>().Owner = this;
+
+            Collider coll = obj.GetComponent<Collider>();
+            if (coll)
+            {
+                coll.enabled = false;
+            }
 
 			Rigidbody rd = obj.GetComponent<Rigidbody> ();
 			if (rd) 
@@ -56,8 +69,16 @@ public class Graber : MonoBehaviour {
     public void Release()
     {
 		if (obj) 
-		{Debug.Log("Release" + obj);
-			obj.transform.parent = null;
+		{
+            obj.GetComponent<InteractableObject>().Owner = null;
+
+            Collider coll = obj.GetComponent<Collider>();
+            if (coll)
+            {
+                coll.enabled = true;
+            }
+
+            obj.transform.parent = null;
 			Rigidbody rd = obj.GetComponent<Rigidbody> ();
 			if (rd) 
 			{

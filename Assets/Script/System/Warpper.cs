@@ -16,6 +16,8 @@ public class Warpper : MonoBehaviour
     [SerializeField]
     private GameObject player;
     [SerializeField]
+    private GameObject eye;
+    [SerializeField]
     private Vector3 Offset;
 
     private bool canWarp = false;
@@ -74,7 +76,7 @@ public class Warpper : MonoBehaviour
     {
         if (CanWarp)
         {
-            player.transform.position = chara.transform.position + Offset;
+            player.transform.position = chara.transform.position - eye.transform.localPosition + Offset;
         }
     }
 }
