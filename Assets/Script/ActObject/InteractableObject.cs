@@ -7,6 +7,9 @@ using UniRx.Triggers;
 
 public class InteractableObject : MonoBehaviour
 {
+    [NonSerialized]
+    public Graber Owner;
+
     public virtual void Act(List<ActBase.ActionParam> actions, GameObject target)
     {
         actions.ForEach(a =>
