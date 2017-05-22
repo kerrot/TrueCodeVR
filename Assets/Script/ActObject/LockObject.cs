@@ -5,7 +5,7 @@ using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
 
-public class SafeObject : MessageReceiver
+public class LockObject : MessageReceiver
 {
     [SerializeField]
     private string password;
@@ -13,16 +13,18 @@ public class SafeObject : MessageReceiver
     private string clear;
     [SerializeField]
     private List<ActBase.ActionParam> actions = new List<ActBase.ActionParam>();
+	[SerializeField]
+	private TextMesh display;
+	[SerializeField]
+    private GameObject target;
 
     private bool opened = false;
 
     private string currentInput;
     public string Current { get { return currentInput; } }
 
-    [SerializeField]
-    private GameObject target;
 
-    public override void ReceiveMassage(string msg)
+	public override void ReceiveMassage(string msg)
     {
         if (opened)
         {
@@ -33,8 +35,11 @@ public class SafeObject : MessageReceiver
         {
             currentInput = "";
         }
-
-        currentInput += msg;
+		else
+		{
+			currentInput += msg;	
+		}
+		UpdateDisplay();
 
         if (currentInput == password)
         {
@@ -42,4 +47,16 @@ public class SafeObject : MessageReceiver
             Act(actions, target);
         }
     }
+
+	void UpdateDisplay()
+	{
+		if (display)
+		{
+			display.text = "";
+			for (int i = 0; i < currentInput.Length; ++i)
+			{
+				display.text += "*";
+			}
+		}
+	}
 }
