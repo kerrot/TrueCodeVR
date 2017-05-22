@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Collections;
 
 [RequireComponent(typeof(Collider))]
-public class ColliderAction : TriggerObject
+public class ColliderObject : TriggerObject
 {
     [SerializeField]
     List<ActBase.ActionParam> enterActs = new List<ActBase.ActionParam>();

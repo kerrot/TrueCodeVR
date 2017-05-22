@@ -51,7 +51,7 @@ public class Graber : MonoBehaviour {
             Collider coll = obj.GetComponent<Collider>();
             if (coll)
             {
-                coll.enabled = false;
+                coll.isTrigger = true;
             }
 
 			Rigidbody rd = obj.GetComponent<Rigidbody> ();
@@ -75,7 +75,7 @@ public class Graber : MonoBehaviour {
             Collider coll = obj.GetComponent<Collider>();
             if (coll)
             {
-                coll.enabled = true;
+                coll.isTrigger = false;
             }
 
             obj.transform.parent = null;
