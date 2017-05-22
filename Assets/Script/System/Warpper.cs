@@ -52,6 +52,7 @@ public class Warpper : MonoBehaviour
             if (!canWarp)
             {
                 render.material.color = Color.blue;
+				return canWarp;
             }
 
             //avatar collision test
@@ -59,6 +60,7 @@ public class Warpper : MonoBehaviour
             if (!canWarp)
             {
                 render.material.color = Color.black;
+				return canWarp;
             }
 
             //hit normal
@@ -66,6 +68,7 @@ public class Warpper : MonoBehaviour
             if (!canWarp)
             {
                 render.material.color = Color.green;
+				return canWarp;
             }
         }
 
