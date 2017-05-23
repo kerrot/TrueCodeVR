@@ -79,7 +79,10 @@ public class Warpper : MonoBehaviour
     {
         if (CanWarp)
         {
-            player.transform.position = chara.transform.position - eye.transform.localPosition + Offset;
+            player.transform.position = chara.transform.position - eye.transform.localPosition;
+			Offset = player.transform.position;
+			Offset.y = 0;
+			player.transform.position = Offset;
         }
     }
 }

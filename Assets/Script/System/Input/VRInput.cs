@@ -23,7 +23,7 @@ public class VRInput : InputBase
     }
 
     [SerializeField]
-    private GameObject rayObject;
+    private VRDevice DV;
     [SerializeField]
     private VRInputType vrType = VRInputType.Press;
     [SerializeField]
@@ -41,10 +41,15 @@ public class VRInput : InputBase
 
     private void Start()
     {
-		SteamVR_TrackedObject trackedObject = rayObject.GetComponent<SteamVR_TrackedObject>();
-		if (trackedObject)
+		if (DV)
 		{
-			device = SteamVR_Controller.Input((int) trackedObject.index);
+			DV.OnReady.Subscribe(_ => Init());
+		}
+    }
+
+	void Init( ) 
+	{
+		device = DV.Device;
 			if (device != null)
 			{
                 BaseInput();
@@ -67,10 +72,9 @@ public class VRInput : InputBase
 								});
                 }
             }
-		}
-    }
+	}
 
-    private ulong GetButton(VRKey k)
+	private ulong GetButton(VRKey k)
     {
         switch (k)
         {
