@@ -17,7 +17,7 @@ public class ColliderObject : TriggerObject
 
     protected virtual void OnCollisionEnter(Collision coll)
     {
-        if (obj != null)
+        if (obj != null || obj.GetComponent<VRDevice>() != null)
         {
             return;
         }
@@ -32,13 +32,15 @@ public class ColliderObject : TriggerObject
             }
         }
 
+        Debug.Log( gameObject.name + " CollisionEnter " + coll.gameObject.name );
+
         obj = coll.gameObject;
         Act(enterActs, target == null ? coll.gameObject : target);
     }
 
     protected virtual void OnTriggerEnter(Collider coll)
     {
-        if (obj != null)
+        if (obj != null || obj.GetComponent<VRDevice>( ) != null )
         {
             return;
         }
@@ -52,6 +54,8 @@ public class ColliderObject : TriggerObject
             }
         }
 
+        Debug.Log( gameObject.name + " TriggerEnter " + coll.gameObject.name );
+
         obj = coll.gameObject;
         Act(enterActs, target == null ? coll.gameObject : target);
     }
@@ -60,6 +64,8 @@ public class ColliderObject : TriggerObject
     {
         if (obj == coll.gameObject)
         {
+            Debug.Log( gameObject.name + " CollisionExit " + coll.gameObject.name );
+
             obj = null;
 
             Act(leaveActs, target == null ? coll.gameObject : target);
@@ -70,6 +76,8 @@ public class ColliderObject : TriggerObject
     {
         if (obj == coll.gameObject)
         {
+            Debug.Log( gameObject.name + " TriggerExit " + coll.gameObject.name );
+
             obj = null;
 
             Act(leaveActs, target == null ? coll.gameObject : target);

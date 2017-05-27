@@ -17,6 +17,12 @@ public class CurveRayCast : RayCastBase {
 
     List<Vector3> results = new List<Vector3>();
 
+    public GameObject RayOwner 
+    {
+        get { return rayObject; }
+        set { rayObject = value; }
+    }
+
     protected override void Cast()
 	{
         results.Clear();

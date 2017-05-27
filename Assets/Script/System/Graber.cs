@@ -25,20 +25,21 @@ public class Graber : MonoBehaviour {
 
     public void Grab(GameObject o)
     {
-		if (o == null || o == obj) 
+		if (o == null || o == obj || obj != null) 
 		{
 			return;
 		}
 
         InteractableObject inter = o.GetComponent<InteractableObject>();
-        if (inter == null || inter.Owner != null)
+        if (inter == null)
         {
             return;
         }
 
-        if (obj != null)
+        // change grab hand
+        if (inter.Owner != null && inter.Owner != this)
         {
-            return;
+            inter.Owner.Release( );
         }
 
         obj = o;

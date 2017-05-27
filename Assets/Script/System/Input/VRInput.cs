@@ -26,8 +26,6 @@ public class VRInput : InputBase
     private VRDevice DV;
     [SerializeField]
     private VRInputType vrType = VRInputType.Press;
-    [SerializeField]
-	private LineDrawControl lines;
 	[SerializeField]
 	private GameObject chara;
 	[SerializeField]
@@ -35,7 +33,7 @@ public class VRInput : InputBase
 	[SerializeField]
 	private VRKey teleportKey;
     [SerializeField]
-    private RayCastBase ray;
+    private CurveRayCast ray;
 
     SteamVR_Controller.Device device;
 
@@ -55,19 +53,24 @@ public class VRInput : InputBase
                 BaseInput();
 
                 Warpper warp = GameObject.FindObjectOfType<Warpper>();
-                if (lines && ray && warp)
+                if (ray && warp)
                 {
+
+                    // when press teleport button, show ray and VR character, then purform raycast;
                     this.UpdateAsObservable().Where(_ => device.GetPress(GetButton(teleportKey)))
                                  .Subscribe(_ => {
-                                     lines.gameObject.SetActive(true);
+                                     ray.RayOwner = DV.gameObject;
+                                     ray.gameObject.SetActive(true);
 									 chara.SetActive(true);
                                      ray.RayCast();
                                      warp.WarpTest(ray.Hit);
                                  });
 
-                    this.UpdateAsObservable().Where(_ => device.GetPressUp(GetButton(teleportKey)))
-                                 .Subscribe(_ => { 
-										lines.gameObject.SetActive(false);
+                    //when teleport keyup, hide ray and VR character
+                    this.UpdateAsObservable().Where(_ =>    device.GetPressUp(GetButton(teleportKey)) && 
+                                                            ray.RayOwner == DV.gameObject) // for two hand, only owner can hide.
+                                 .Subscribe(_ => {
+                                        ray.gameObject.SetActive(false);
 										chara.SetActive(false);		
 								});
                 }
