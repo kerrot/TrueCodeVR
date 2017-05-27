@@ -17,12 +17,11 @@ public class ColliderObject : TriggerObject
 
     protected virtual void OnCollisionEnter(Collision coll)
     {
-        if (obj != null || obj.GetComponent<VRDevice>() != null)
+        if (obj != null || coll.gameObject.GetComponent<Graber>() != null)
         {
             return;
         }
 
-        
         if (constraince != "")
         {
             DataHolder data = coll.gameObject.GetComponent<DataHolder>();
@@ -40,7 +39,7 @@ public class ColliderObject : TriggerObject
 
     protected virtual void OnTriggerEnter(Collider coll)
     {
-        if (obj != null || obj.GetComponent<VRDevice>( ) != null )
+        if (obj != null || coll.gameObject.GetComponent<Graber>() != null)
         {
             return;
         }

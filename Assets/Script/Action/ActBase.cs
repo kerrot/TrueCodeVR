@@ -15,6 +15,7 @@ public abstract class ActBase {
         ActWarp,
         ActOutline,
         ActSendMessage,
+        ActRelease,
     }
 
     [Serializable]

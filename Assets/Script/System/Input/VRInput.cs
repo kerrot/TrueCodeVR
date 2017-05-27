@@ -56,12 +56,17 @@ public class VRInput : InputBase
                 if (ray && warp)
                 {
 
-                    // when press teleport button, show ray and VR character, then purform raycast;
-                    this.UpdateAsObservable().Where(_ => device.GetPress(GetButton(teleportKey)))
+                this.UpdateAsObservable().Where(_ => device.GetPressDown(GetButton(teleportKey)) && ray.RayOwner != DV.gameObject)
+                    .Subscribe(_ => {
+                        ray.RayOwner = DV.gameObject;
+                        ray.gameObject.SetActive(true);
+                        chara.SetActive(true);
+                    });
+
+
+                // when press teleport button, show ray and VR character, then purform raycast;
+                this.UpdateAsObservable().Where(_ => device.GetPress(GetButton(teleportKey)) && ray.RayOwner == DV.gameObject)
                                  .Subscribe(_ => {
-                                     ray.RayOwner = DV.gameObject;
-                                     ray.gameObject.SetActive(true);
-									 chara.SetActive(true);
                                      ray.RayCast();
                                      warp.WarpTest(ray.Hit);
                                  });
@@ -70,9 +75,17 @@ public class VRInput : InputBase
                     this.UpdateAsObservable().Where(_ =>    device.GetPressUp(GetButton(teleportKey)) && 
                                                             ray.RayOwner == DV.gameObject) // for two hand, only owner can hide.
                                  .Subscribe(_ => {
-                                        ray.gameObject.SetActive(false);
-										chara.SetActive(false);		
-								});
+                                         
+                                         ray.gameObject.SetActive(false);
+										 chara.SetActive(false);
+                                         Warpper w = GameObject.FindObjectOfType<Warpper>();
+                                         if (w)
+                                         {
+                                             w.Warp();
+                                         }
+
+                                         ray.RayOwner = null;
+                                 });
                 }
             }
 	}

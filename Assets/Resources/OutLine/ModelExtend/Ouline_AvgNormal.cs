@@ -94,7 +94,7 @@ public class Ouline_AvgNormal : MonoBehaviour {
 	private void OnDestroy( ) {
 		if (outlineObj)
         {
-            DestroyObject(outlineObj);
+            DestroyImmediate(outlineObj);
         }
 	}
 }

@@ -14,6 +14,9 @@ public class Graber : MonoBehaviour {
 	private Vector3 lastPosiiton;
 	private System.IDisposable recordSubject;
 
+    private Vector3 grabPosition;
+    private Quaternion grabRotation;
+
     private void Awake()
     {
         if (input)
@@ -47,6 +50,9 @@ public class Graber : MonoBehaviour {
 		{
 			obj.transform.parent = transform;
 
+            grabPosition = obj.transform.localPosition;
+            grabRotation = obj.transform.localRotation;
+
             obj.GetComponent<InteractableObject>().Owner = this;
 
             Collider coll = obj.GetComponent<Collider>();
@@ -63,7 +69,12 @@ public class Graber : MonoBehaviour {
 				rd.angularVelocity = Vector3.zero;
 			}
 
-			recordSubject = this.LateUpdateAsObservable ().Subscribe (_ => lastPosiiton = obj.transform.position);
+			recordSubject = this.LateUpdateAsObservable ().Subscribe (_ => 
+            {
+                obj.transform.localPosition = grabPosition;
+                obj.transform.localRotation = grabRotation;
+                lastPosiiton = obj.transform.position;
+            });
 		}
     }
 
